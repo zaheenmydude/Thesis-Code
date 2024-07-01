@@ -1,0 +1,49 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read the Excel file
+df = pd.read_excel('APU E-Sports Scholarship Thesis Form (Responses).xlsx')
+
+# Select the relevant columns
+benefit_columns = [
+    'Do you believe that involvement in E-Sports contributes to goal setting and achievement?',
+    'Do you believe that involvement in E-Sports contributes to physical health?',
+    'Do you believe that involvement in E-Sports contributes to socialization and teamwork?',
+    'Do you believe that involvement in E-Sports contributes to psychological benefits?'
+]
+
+# Calculate the mean scores for each benefit
+benefit_means = df[benefit_columns].mean().sort_values(ascending=False)
+
+# Create a bar plot
+plt.figure(figsize=(12, 6))
+sns.barplot(x=benefit_means.values, y=benefit_means.index)
+plt.title('Perceived Benefits of E-Sports Involvement')
+plt.xlabel('Mean Score (1-5 scale)')
+plt.tight_layout()
+plt.show()
+
+print('Mean scores for perceived benefits:')
+print(benefit_means)
+
+# Now let's look at the perceived drawbacks
+drawback_columns = [
+    'Do you believe that involvement in E-Sports affects academics and time distribution?',
+    'Do you believe that involvement in E-Sports leads to physical strain?',
+    'Do you believe that involvement in E-Sports leads to a negative social image and perception towards E-Sports?'
+]
+
+drawback_means = df[drawback_columns].mean().sort_values(ascending=False)
+
+plt.figure(figsize=(12, 6))
+sns.barplot(x=drawback_means.values, y=drawback_means.index)
+plt.title('Perceived Drawbacks of E-Sports Involvement')
+plt.xlabel('Mean Score (1-5 scale)')
+plt.tight_layout()
+plt.show()
+
+print('Mean scores for perceived drawbacks:')
+print(drawback_means)
+"""
+}
