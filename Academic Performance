@@ -1,0 +1,36 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read the Excel file
+df = pd.read_excel('APU E-Sports Scholarship Thesis Form (Responses).xlsx')
+
+# Extract the relevant column
+academic_impact = df['Do you believe that involvement in E-Sports affects academics and time distribution?']
+
+# Calculate the distribution of responses
+value_counts = academic_impact.value_counts().sort_index()
+
+# Create a bar plot
+plt.figure(figsize=(10, 6))
+sns.barplot(x=value_counts.index, y=value_counts.values)
+plt.title('Distribution of Responses: Impact on Academics and Time Distribution')
+plt.xlabel('Response (1: Strongly Disagree, 5: Strongly Agree)')
+plt.ylabel('Number of Responses')
+plt.show()
+
+# Calculate percentage distribution
+percentage_distribution = (value_counts / value_counts.sum() * 100).round(2)
+print("Percentage distribution of responses:")
+print(percentage_distribution)
+
+# Calculate correlation with interest in E-Sports
+interest_correlation = df['Do you have an interest in E-Sports?'].corr(academic_impact)
+print(f"\\nCorrelation between interest in E-Sports and perceived academic impact: {interest_correlation:.2f}")
+
+# Calculate average perceived academic impact by level of involvement
+involvement_impact = df.groupby('How would you describe your level of involvement in E-Sports?')['Do you believe that involvement in E-Sports affects academics and time distribution?'].mean().sort_values(ascending=False)
+print("\\nAverage perceived academic impact by level of involvement:")
+print(involvement_impact)
+"""
+}
