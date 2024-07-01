@@ -1,0 +1,58 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the data
+df = pd.read_excel('APU E-Sports Scholarship Thesis Form (Responses).xlsx')
+
+# Convert columns to numeric where necessary
+numeric_columns = ['Do you have an interest in E-Sports?', 
+                   'Do you believe that involvement in E-Sports affects academics and time distribution?',
+                   'Do you believe that involvement in E-Sports contributes to goal setting and achievement?',
+                   'Do you believe that involvement in E-Sports contributes to physical health?',
+                   'Do you believe that involvement in E-Sports contributes to socialization and teamwork?',
+                   'Do you believe that involvement in E-Sports contributes to psychological benefits?',
+                   'Do you believe that involvement in E-Sports leads to physical strain?',
+                   'Do you believe that involvement in E-Sports leads to a negative social image and perception towards E-Sports?']
+
+for col in numeric_columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+
+# Calculate average perceptions by year of study
+perceptions_by_year = df.groupby('What is your year of study?')[numeric_columns].mean()
+print("Average perceptions by year of study:")
+print(perceptions_by_year)
+
+# Calculate correlations between different perceptions
+correlations = df[numeric_columns].corr()
+print("\nCorrelations between different perceptions:")
+print(correlations)
+
+# Visualize correlations
+plt.figure(figsize=(12, 10))
+sns.heatmap(correlations, annot=True, cmap='coolwarm', vmin=-1, vmax=1, center=0)
+plt.title('Correlations between E-Sports Perceptions')
+plt.tight_layout()
+plt.savefig('esports_perceptions_correlations.png')
+plt.close()
+
+# Analyze perception differences based on previous experience
+experience_groups = df.groupby('Do you have any previous experience with E-Sports?')
+experience_perceptions = experience_groups[numeric_columns].mean()
+print("\nAverage perceptions based on previous E-Sports experience:")
+print(experience_perceptions)
+
+# Visualize the impact of previous experience on perceptions
+plt.figure(figsize=(12, 6))
+experience_perceptions.T.plot(kind='bar')
+plt.title('Impact of Previous E-Sports Experience on Perceptions')
+plt.xlabel('Perception Categories')
+plt.ylabel('Average Score')
+plt.legend(title='Previous Experience', loc='upper left', bbox_to_anchor=(1, 1))
+plt.tight_layout()
+plt.savefig('esports_experience_impact.png')
+plt.close()
+
+print("Analysis complete. Correlation heatmap and experience impact chart have been saved.")
+"""
+}
