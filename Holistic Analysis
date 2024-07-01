@@ -1,0 +1,26 @@
+
+
+import pandas as pd
+import numpy as np
+
+# Read the Excel file
+FILEPATH = 'APU E-Sports Scholarship Thesis Form (Responses).xlsx'
+df = pd.read_excel(FILEPATH, sheet_name='Form responses 1')
+
+# Select columns 19 to 37
+columns_of_interest = df.columns[19:38]  # Python uses 0-based indexing, so we use 38 to include the 37th column
+df_esports = df[columns_of_interest]
+
+print('Columns in the dataframe:')
+for col in df_esports.columns:
+    print(col)
+
+print('
+Dataframe info:')
+print(df_esports.info())
+
+print('
+First few rows of the dataframe:')
+print(df_esports.head())
+
+print('done')
